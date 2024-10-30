@@ -1,0 +1,64 @@
+@startuml
+
+class Usuario {
+    +usuario_id: INT
+    +nombre_usuario: VARCHAR(50)
+    +contraseña: VARCHAR(255)
+}
+
+class Persona {
+    +persona_id: INT
+    +nombre: VARCHAR(100)
+    +correo: VARCHAR(100)
+    +rol: ENUM
+    +usuario_id: INT
+}
+
+class Curso {
+    +curso_id: INT
+    +nombre_curso: VARCHAR(100)
+    +aula: VARCHAR(50)
+}
+
+class Persona_Curso {
+    +persona_id: INT
+    +curso_id: INT
+    +rol_curso: ENUM
+}
+
+class Materia {
+    +materia_id: INT
+    +nombre_materia: VARCHAR(100)
+    +curso_id: INT
+}
+
+class Nota {
+    +nota_id: INT
+    +estudiante_id: INT
+    +materia_id: INT
+    +nota: DECIMAL(3, 2)
+    +fecha_evaluacion: DATE
+}
+
+class Nota_Final {
+    +nota_final_id: INT
+    +estudiante_id: INT
+    +curso_id: INT
+    +nota_final: DECIMAL(3, 2)
+    +estado_aprobacion: ENUM
+}
+
+class Asistencia {
+    +asistencia_id: INT
+    +estudiante_id: INT
+    +curso_id: INT
+    +fecha: DATE
+    +presente: BOOLEAN
+}
+
+Persona "1" -- "0..1" Usuario : "tiene"
+Persona_Curso "0..*" -- "1" Persona : "inscribe"
+Persona_Curso "0..*" -- "1" Curso : "contiene"
+Materia "0..*" -- "1" Curso : "pertenece"
+Nota "0..*" -- "1" Persona : "evaluado"
+Nota "0..*" -- "1" Mater
