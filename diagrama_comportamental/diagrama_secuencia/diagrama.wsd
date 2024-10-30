@@ -1,0 +1,41 @@
+@startuml
+actor Profesor
+actor Estudiante
+boundary Sistema as Sistema
+database BD as BaseDeDatos
+
+Profesor -> Sistema : Iniciar sesión
+Sistema -> BaseDeDatos : Validar credenciales(Profesor)
+BaseDeDatos --> Sistema : Credenciales válidas
+Sistema --> Profesor : Acceso concedido
+
+Estudiante -> Sistema : Iniciar sesión
+Sistema -> BaseDeDatos : Validar credenciales(Estudiante)
+BaseDeDatos --> Sistema : Credenciales válidas
+Sistema --> Estudiante : Acceso concedido
+
+group Profesor gestiona curso y asigna nota
+    Profesor -> Sistema : Ver cursos asignados
+    Sistema -> BaseDeDatos : Obtener cursos(Profesor)
+    BaseDeDatos --> Sistema : Lista de cursos
+    Sistema --> Profesor : Mostrar lista de cursos
+
+    Profesor -> Sistema : Asignar nota a estudiante
+    Sistema -> BaseDeDatos : Guardar nota(Estudiante, Materia)
+    BaseDeDatos --> Sistema : Confirmar guardado de nota
+    Sistema --> Profesor : Nota asignada con éxito
+end
+
+group Estudiante consulta sus notas y asistencia
+    Estudiante -> Sistema : Ver notas
+    Sistema -> BaseDeDatos : Obtener notas(Estudiante)
+    BaseDeDatos --> Sistema : Devolver notas
+    Sistema --> Estudiante : Mostrar notas
+
+    Estudiante -> Sistema : Ver asistencia
+    Sistema -> BaseDeDatos : Obtener asistencia(Estudiante)
+    BaseDeDatos --> Sistema : Devolver registros de asistencia
+    Sistema --> Estudiante : Mostrar asistencia
+end
+
+@enduml
