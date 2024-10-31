@@ -1,0 +1,36 @@
+@startuml
+package "Sistema de Planilla Académica" {
+    [Aplicación Web] as AplicacionWeb
+
+    component "Autenticación" as Auth
+    component "Gestión de Usuarios" as GestionUsuarios
+    component "Gestión de Cursos" as GestionCursos
+    component "Gestión de Materias" as GestionMaterias
+    component "Gestión de Notas" as GestionNotas
+    component "Gestión de Asistencia" as GestionAsistencia
+
+    database "Base de Datos" as BD
+}
+
+AplicacionWeb --> Auth : Iniciar sesión
+Auth --> BD : Validar credenciales
+
+Auth --> GestionUsuarios : Autenticar usuario
+AplicacionWeb --> GestionUsuarios : Registrar usuario
+
+GestionUsuarios --> BD : Guardar información de usuario
+
+AplicacionWeb --> GestionCursos : Acceder a cursos
+GestionCursos --> BD : Obtener y guardar cursos
+GestionCursos --> GestionMaterias : Relacionar materias con cursos
+
+AplicacionWeb --> GestionMaterias : Acceder a materias
+GestionMaterias --> BD : Obtener y guardar materias
+
+AplicacionWeb --> GestionNotas : Acceder a notas
+GestionNotas --> BD : Guardar y obtener notas
+
+AplicacionWeb --> GestionAsistencia : Acceder a asistencia
+GestionAsistencia --> BD : Guardar y obtener registros de asistencia
+
+@enduml

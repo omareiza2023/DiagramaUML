@@ -1,0 +1,41 @@
+@startuml a
+!define DATABASE database
+allowmixing
+
+class Persona
+class Usuario
+class Autenticacion
+class UsuarioAutenticado
+class Nota
+class Asistencia
+class Curso
+class Estudiante
+class Profesor
+class Administrador
+class Planilla
+
+DATABASE DBUser
+DATABASE DBAdmin
+
+Persona <|-- Usuario
+Usuario --> Autenticacion
+Autenticacion --> DBUser
+
+UsuarioAutenticado --> Profesor
+UsuarioAutenticado --> Estudiante
+UsuarioAutenticado --> Administrador
+
+' Relaciones de acceso
+DBAdmin --> Asistencia : acceso total
+DBAdmin --> Curso : acceso total
+DBAdmin --> Nota : acceso total
+DBAdmin --> Planilla : acceso total
+
+' Flechas de acceso
+DBAdmin --|> Administrador : acceso global
+Asistencia <--o Profesor : acceso limitado
+Nota <--o Profesor : acceso limitado
+Planilla <--o Estudiante : acceso limitado
+
+@enduml
+
