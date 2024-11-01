@@ -1,0 +1,36 @@
+@startuml despliegue
+
+!define NODE node
+
+' Definir nodos
+NODE "Servidor de Autenticación" as AuthServer {
+  artifact "Servicio de Autenticación" as AuthService
+  database "DBUser" as DBUser
+}
+
+NODE "Servidor de Aplicaciones" as AppServer {
+  artifact "Aplicación Principal" as MainApp
+  artifact "Servicio de Planilla" as PlanillaService
+}
+
+NODE "Servidor de Administración de Datos" as DataAdminServer {
+  database "DBAdmin" as DBAdmin
+  artifact "Servicio de Administración" as AdminService
+}
+
+NODE "Cliente Web" as WebClient {
+  [Navegador Web]
+}
+
+' Relaciones entre nodos
+WebClient --> AuthServer : Solicitud de autenticación
+AuthServer --> AppServer : Enviar token de autenticación
+AppServer --> DataAdminServer : Consultas y registro de datos
+AppServer --> DBAdmin : Consultas de datos administrativos
+
+' Conexiones a bases de datos
+AuthService --> DBUser : Validación de credenciales
+AdminService --> DBAdmin : Acceso a datos de administración
+PlanillaService --> DBAdmin : Consultas de datos para estudiantes
+
+@enduml
