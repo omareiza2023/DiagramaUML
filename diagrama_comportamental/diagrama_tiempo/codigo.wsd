@@ -1,0 +1,44 @@
+@startuml diagrama_tiempo
+
+participant "Usuario" as User
+participant "Autenticación" as Auth
+participant "Base de Datos" as DB
+participant "Sistema" as System
+
+== Inicio de sesión ==
+User -> Auth : Iniciar sesión
+activate Auth
+
+Auth -> DB : Validar credenciales
+activate DB
+DB --> Auth : Credenciales válidas
+deactivate DB
+
+Auth --> User : Autenticación exitosa
+deactivate Auth
+
+== Acceso a Gestión ==
+User -> System : Acceder a Gestión de Notas
+activate System
+
+System -> DB : Consultar notas
+activate DB
+DB --> System : Retornar notas
+deactivate DB
+
+System --> User : Mostrar notas
+deactivate System
+
+== Registro de Asistencia ==
+User -> System : Registrar asistencia
+activate System
+
+System -> DB : Guardar asistencia
+activate DB
+DB --> System : Confirmación de guardado
+deactivate DB
+
+System --> User : Asistencia registrada
+deactivate System
+
+@enduml
