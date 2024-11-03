@@ -1,0 +1,49 @@
+@startuml
+
+[*] --> Login : Iniciar sesión
+
+state Login {
+    [*] --> IngresarCredenciales
+    IngresarCredenciales --> Validacion : Validar credenciales
+    Validacion --> Exito : Autenticación exitosa
+    Validacion --> Error : Autenticación fallida
+    Error --> IngresarCredenciales : Reintentar
+}
+
+Exito --> SeleccionRol
+
+state SeleccionRol {
+    [*] --> Seleccion
+    Seleccion --> Estudiante : Rol: Estudiante
+    Seleccion --> Profesor : Rol: Profesor
+    Seleccion --> Administrador : Rol: Administrador
+}
+
+state Estudiante {
+    [*] --> VerNotas
+    VerNotas --> VerAsistencia
+    VerAsistencia --> [*]
+}
+
+state Profesor {
+    [*] --> RegistrarNotas
+    RegistrarNotas --> RegistrarAsistencia
+    RegistrarAsistencia --> [*]
+}
+
+state Administrador {
+    [*] --> GestionUsuarios
+    GestionUsuarios --> GestionDatos
+    GestionDatos --> [*]
+}
+
+SeleccionRol --> Estudiante : Acceso a Estudiante
+SeleccionRol --> Profesor : Acceso a Profesor
+SeleccionRol --> Administrador : Acceso a Administrador
+
+Estudiante --> [*] : Cerrar sesión
+Profesor --> [*] : Cerrar sesión
+Administrador --> [*] : Cerrar sesión
+
+@enduml
+

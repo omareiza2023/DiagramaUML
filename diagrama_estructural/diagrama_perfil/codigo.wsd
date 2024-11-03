@@ -1,0 +1,41 @@
+@startuml
+
+' Definición de estereotipos personalizados
+class Usuario <<Entity>> {
+    + tipo: String
+    + permisos: String
+}
+
+class ComponenteSistema <<Component>> {
+    + versión: String
+    + responsable: String
+}
+
+class BaseDatos <<Database>> {
+    + tipo: String
+    + almacenamiento: String
+}
+
+class ServicioWeb <<Interface>> {
+    + endpoint: String
+    + método: String
+}
+
+' Aplicación de estereotipos
+Usuario <|-- Estudiante
+Usuario <|-- Profesor
+Usuario <|-- Administrador
+
+ComponenteSistema <|-- "Gestión de Notas"
+ComponenteSistema <|-- "Gestión de Asistencia"
+ComponenteSistema <|-- "Gestión de Cursos"
+
+BaseDatos <|-- DBUser
+BaseDatos <|-- DBAdmin
+
+ServicioWeb <|-- "API Autenticación"
+ServicioWeb <|-- "API Notas"
+ServicioWeb <|-- "API Asistencia"
+
+@enduml
+
